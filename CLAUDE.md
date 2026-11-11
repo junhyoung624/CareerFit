@@ -9,7 +9,7 @@
 - Next.js (App Router) + TypeScript (strict)
 - Tailwind CSS
 - Supabase: Auth, PostgreSQL, Storage (이력서 PDF)
-- LLM API: 서버(Route Handler / Server Action)에서만 호출
+- LLM API: Google Gemini. 서버(Route Handler / Server Action)에서만 호출, 모델명은 `GEMINI_MODEL` 환경변수로 관리
 - 검증: zod (폼 입력, API 응답, LLM 출력 모두)
 - PDF 텍스트 추출: 서버에서 처리 (unpdf 또는 pdf-parse)
 - 채용공고 목록: 공식 API만 사용 (사람인 Open API 또는 로켓펀치 Open API). 크롤링 금지.
@@ -67,7 +67,9 @@ interface JobSource {
 
 ## 코딩 규칙
 - `any` 금지. 타입은 `src/types` 또는 zod 스키마에서 추론
-- API 키·서비스 롤 키는 서버 전용. `NEXT_PUBLIC_` 접두사에 비밀값 금지
+- API 키·Supabase secret key는 서버 전용. `NEXT_PUBLIC_` 접두사에 비밀값 금지
+- 환경변수 이름은 `.env.example` 기준 (`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`, `GEMINI_API_KEY`, `GEMINI_MODEL`, `JOB_SOURCE` 등). 새 변수는 `.env.local`과 `.env.example`에 함께 추가
+- 서버 전용 모듈(`lib/llm` 등)은 파일 맨 위에 `import "server-only"`
 - 모든 비동기 화면에 로딩 / 에러 / 빈 상태 3가지 UI를 구현
 - 모바일(375px)부터 반응형
 - 컴포넌트는 작게, 서버 컴포넌트 기본, 상호작용 필요한 곳만 `"use client"`

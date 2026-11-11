@@ -2,6 +2,7 @@
 
 > 레포 루트에 `CLAUDE.md`와 함께 둡니다.
 > Claude Code에서는 **태스크 하나 = 세션 하나**로 진행하세요. 아래 "프롬프트"를 그대로 붙여넣으면 됩니다.
+> ⚠️ 보완 예정 사항: [docs/plan-revisions.md](docs/plan-revisions.md) — 각 태스크 시작 전에 확인
 
 ## 사용법
 1. Claude Code 실행 → 아래 프롬프트 복사·붙여넣기
@@ -17,8 +18,8 @@
 
 ## 0일차 — 시작 전에 직접 할 일 (Claude Code 밖)
 - [ ] 사람인 Open API, 로켓펀치 Open API 키 신청 (승인 대기 동안 mock으로 개발)
-- [ ] Supabase 프로젝트 생성 → URL, anon key, service role key 메모
-- [ ] LLM API 키 발급
+- [ ] Supabase 프로젝트 생성 → URL, publishable key, secret key 메모
+- [ ] Gemini API 키 발급 (Google AI Studio)
 - [ ] GitHub 레포 생성
 - [ ] 테스트용 이력서 PDF 1개, 실제 프론트엔드 공고 3개(텍스트 공고 2 + 이미지 공고 1) 준비
 
@@ -27,7 +28,7 @@
 ## 1주차 — 기본 구조 · 인증 · 경험 등록
 
 ### W1-1. 프로젝트 세팅
-- [ ] 완료
+- [x] 완료
 ```
 CLAUDE.md를 읽고 Next.js(App Router) + TypeScript + Tailwind 프로젝트를 세팅해줘.
 ESLint, Prettier, 절대경로(@/) 설정, CLAUDE.md의 폴더 구조대로 빈 폴더 생성,
@@ -49,7 +50,7 @@ Button, Input, Textarea, Select, Card, Skeleton, EmptyState, ErrorBox를 만들�
 ```
 CLAUDE.md의 데이터 모델대로 supabase/migrations에 SQL을 작성해줘.
 모든 테이블에 RLS 정책 포함. lib/supabase에 브라우저용·서버용 클라이언트를 만들고,
-DB 타입을 src/types에 정의해줘. 마이그레이션은 내가 Supabase SQL Editor에서 직접 실행할 거야.
+DB 타입은 Supabase CLI(supabase gen types)로 생성해서 src/types에 저장해줘. 마이그레이션은 내가 Supabase SQL Editor에서 직접 실행할 거야.
 ```
 **완료 기준**: Supabase 대시보드에 테이블 5개 + RLS 활성화 확인
 
@@ -57,7 +58,7 @@ DB 타입을 src/types에 정의해줘. 마이그레이션은 내가 Supabase SQ
 - [ ] 완료
 ```
 Supabase Auth 이메일 로그인/회원가입 페이지와 로그아웃을 구현해줘.
-로그인하지 않은 사용자는 보호된 페이지 접근 시 /login으로 이동(middleware).
+로그인하지 않은 사용자는 보호된 페이지 접근 시 /login으로 이동(Next.js 16의 proxy.ts).
 첫 로그인 후 /onboarding에서 직군(개발/디자인/마케팅/기획/영업·사무)을 선택해 profiles에 저장.
 폼 검증은 zod로.
 ```
